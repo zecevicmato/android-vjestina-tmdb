@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.sp
 fun UserScoreProgressBar(
     modifier: Modifier = Modifier,
     score: Float,
-    color: Color = Color.Green
+    color: Color = Color.Green,
+    lightGray: Color = Color.LightGray,
 ) {
     Box(
         modifier = modifier
@@ -26,10 +27,17 @@ fun UserScoreProgressBar(
         contentAlignment = Alignment.Center
     ) {
         Box(
-            modifier=modifier.size(60.dp),
+            modifier = Modifier.size(60.dp),
             contentAlignment = Alignment.Center
         ) {
-            Canvas(modifier = modifier.fillMaxSize()) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                drawArc(
+                    color = lightGray,
+                    startAngle = -90f,
+                    sweepAngle = 360 * 1f,
+                    useCenter = false,
+                    style = Stroke(width = 8f, cap = StrokeCap.Round)
+                )
                 drawArc(
                     color = color,
                     startAngle = -90f,
@@ -46,11 +54,10 @@ fun UserScoreProgressBar(
             )
         }
     }
-
 }
 
 @Preview
 @Composable
 fun UserScoreProgressBarPreview() {
-    UserScoreProgressBar(score = 7.50f)
+    UserScoreProgressBar(score = 6.0f)
 }
