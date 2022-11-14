@@ -29,9 +29,6 @@ fun MovieCard(
     Card(
         elevation = 6.dp,
         modifier = modifier
-            .padding(8.dp)
-            .height(220.dp)
-            .width(135.dp)
             .clip(RoundedCornerShape(10.dp))
     ) {
         Box {
@@ -41,7 +38,7 @@ fun MovieCard(
             )
             FavoriteButton(
                 isFavorite = movieCardViewState.isFavorite,
-                modifier.padding(8.dp),
+                modifier = Modifier.padding(8.dp),
                 onClick = onFavoriteClick
             )
         }

@@ -26,7 +26,8 @@ fun CrewItem(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        color = MaterialTheme.colors.background
+        color = MaterialTheme.colors.background,
+        modifier = modifier
     ) {
         Column {
             Text(

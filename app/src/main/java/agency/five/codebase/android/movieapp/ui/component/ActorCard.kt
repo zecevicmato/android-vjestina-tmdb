@@ -40,7 +40,7 @@ fun ActorCard(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .size(120.dp)
+                    .height(100.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
             Text(

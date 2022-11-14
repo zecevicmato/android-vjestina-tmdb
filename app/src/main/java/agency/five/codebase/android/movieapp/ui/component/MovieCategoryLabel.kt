@@ -28,17 +28,13 @@ sealed class MovieCategoryLabelTextViewState {
 
 @Composable
 fun MovieCategoryLabel(
-    modifier: Modifier = Modifier,
     state: MovieCategoryLabelViewState,
-    onClick: () -> Unit,
+    onClick: (MovieCategoryLabelViewState) -> Unit,
 ) {
-    modifier.clickable {
-        onClick()
-    }
     if (state.isSelected) {
-        Selected(state, onClick = { state.isSelected = true })
+        Selected(state, onClick = onClick)
     } else {
-        Unselected(state, onClick = { state.isSelected = false })
+        Unselected(state, onClick = onClick)
     }
 }
 
@@ -46,25 +42,27 @@ fun MovieCategoryLabel(
 fun Selected(
     state: MovieCategoryLabelViewState,
     onClick: (MovieCategoryLabelViewState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    MovieCategoryLabel(state = state, modifier = Modifier) {}
-    Column {
-        Text(
-            text = getSource(state = state),
-            fontSize = 12.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onClick(state) },
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(
-            modifier = Modifier
-                .size(1.dp)
-        )
-        Divider(
-            thickness = 2.dp,
-            color = Color.Black,
-        )
+    Box(modifier = modifier) {
+        Column {
+            Text(
+                text = getSource(state = state),
+                fontSize = 12.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onClick(state) },
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(
+                modifier = Modifier
+                    .size(1.dp)
+            )
+            Divider(
+                thickness = 2.dp,
+                color = Color.Black,
+            )
+        }
     }
 }
 
@@ -72,10 +70,10 @@ fun Selected(
 fun Unselected(
     state: MovieCategoryLabelViewState,
     onClick: (MovieCategoryLabelViewState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    MovieCategoryLabel(state = state, modifier = Modifier) {}
     Text(
-        modifier = Modifier
+        modifier = modifier
             .clickable { onClick(state) },
         text = getSource(state = state),
         fontSize = 12.sp,
@@ -95,14 +93,12 @@ fun getSource(state: MovieCategoryLabelViewState): String {
 @Preview
 @Composable
 fun MovieCategoryLabelPreview() {
-    var isSelected by remember { mutableStateOf(false) }
     val textFromString = MovieCategoryLabelTextViewState.StringText("Movies")
     val selected = MovieCategoryLabelViewState(1, true, textFromString)
-    val unselected = MovieCategoryLabelViewState(2, false, textFromString)
     Surface(modifier = Modifier.size(100.dp)) {
         Column {
-            MovieCategoryLabel(state = selected, onClick = { selected.isSelected })
-            MovieCategoryLabel(state = unselected, onClick = { unselected.isSelected })
+            MovieCategoryLabel(state = selected,
+                onClick = { selected.isSelected = selected.isSelected.not() })
         }
     }
 }
