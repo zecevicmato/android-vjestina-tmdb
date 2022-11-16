@@ -34,11 +34,11 @@ fun MovieCategoryLabel(
 ) {
     Column(
         modifier = modifier
-    ){
+    ) {
         if (state.isSelected) {
-            Selected(state, onClick = onClick,modifier)
+            Selected(state, onClick = onClick, modifier)
         } else {
-            Unselected(state, onClick = onClick,modifier)
+            Unselected(state, onClick = onClick, modifier)
         }
     }
 }
