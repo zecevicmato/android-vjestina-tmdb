@@ -1,4 +1,8 @@
 package agency.five.codebase.android.movieapp.ui.moviedetails
 
-class ActorViewState {
-}
+import agency.five.codebase.android.movieapp.ui.component.ActorCardViewState
+
+data class ActorViewState(
+    val id: Int,
+    val actorCardViewState: ActorCardViewState,
+)

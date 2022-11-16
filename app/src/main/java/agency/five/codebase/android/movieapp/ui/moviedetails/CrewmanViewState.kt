@@ -1,4 +1,8 @@
 package agency.five.codebase.android.movieapp.ui.moviedetails
 
-class CrewmanViewState {
-}
+import agency.five.codebase.android.movieapp.ui.component.CrewItemViewState
+
+data class CrewmanViewState(
+    val id: Int,
+    val crewItemViewState: CrewItemViewState,
+)
