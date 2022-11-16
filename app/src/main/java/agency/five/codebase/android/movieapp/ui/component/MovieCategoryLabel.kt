@@ -30,11 +30,16 @@ sealed class MovieCategoryLabelTextViewState {
 fun MovieCategoryLabel(
     state: MovieCategoryLabelViewState,
     onClick: (MovieCategoryLabelViewState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    if (state.isSelected) {
-        Selected(state, onClick = onClick)
-    } else {
-        Unselected(state, onClick = onClick)
+    Column(
+        modifier = modifier
+    ){
+        if (state.isSelected) {
+            Selected(state, onClick = onClick,modifier)
+        } else {
+            Unselected(state, onClick = onClick,modifier)
+        }
     }
 }
 
