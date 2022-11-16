@@ -79,7 +79,7 @@ fun FavoritesHeader() {
     Spacer(
         modifier = Modifier
             .height(
-                MaterialTheme.spacing.medium
+                MaterialTheme.spacing.large
             )
     )
 }
