@@ -5,4 +5,15 @@
     <string name="user_score">User score</string>
     <string name="overview">Overview</string>
     <string name="cast_title">Top Billed Cast</string>
+    <string name="streaming">Streaming</string>
+    <string name="on_tv">On TV</string>
+    <string name="for_rent">For Rent</string>
+    <string name="in_theatres">In Theatres</string>
+    <string name="tv">TV</string>
+    <string name="today">Today</string>
+    <string name="this_week">This Week</string>
+    <string name="whats_popular">Whats popular</string>
+    <string name="now_playing">Now playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="home">Home</string>
 </resources>
