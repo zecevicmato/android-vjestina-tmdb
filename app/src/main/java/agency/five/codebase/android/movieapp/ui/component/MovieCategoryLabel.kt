@@ -89,7 +89,8 @@ fun Unselected(
 
 @Composable
 fun getSource(state: MovieCategoryLabelViewState): String {
-    return when (val categoryText = state.categoryText) {
+    val categoryText = state.categoryText
+    return when (categoryText) {
         is MovieCategoryLabelTextViewState.StringText -> categoryText.text
         is MovieCategoryLabelTextViewState.ResourceText -> stringResource(id = categoryText.textRes)
     }

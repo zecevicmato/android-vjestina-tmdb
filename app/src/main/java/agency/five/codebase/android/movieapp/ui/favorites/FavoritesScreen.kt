@@ -15,6 +15,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.dimensionResource
@@ -30,10 +33,11 @@ val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMovi
 
 
 @Composable
-fun FavoritesRoute(
-
-) {
-
+fun FavoritesRoute(onNavigateToMovieDetails: (Int) -> Unit) {
+    val favorites by remember {
+        mutableStateOf(favoritesViewState)
+    }
+    FavoritesScreen(favorites)
 }
 
 @Composable

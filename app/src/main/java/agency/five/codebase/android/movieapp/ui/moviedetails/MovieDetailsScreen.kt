@@ -20,6 +20,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -32,6 +35,14 @@ private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
 
 private val movieDetailsViewState =
     movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
+
+@Composable
+fun MovieDetailsRoute() {
+    val details by remember {
+        mutableStateOf(movieDetailsViewState)
+    }
+    MovieDetailsScreen(movieDetailsViewState = details, onFavoriteButtonClick = {})
+}
 
 @Composable
 fun MovieDetailsScreen(
