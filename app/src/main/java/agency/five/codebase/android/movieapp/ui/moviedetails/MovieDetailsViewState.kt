@@ -19,5 +19,6 @@ data class CrewmanViewState(
 )
 
 data class ActorViewState(
+    val id: Int,
     val actorCardViewState: ActorCardViewState,
 )

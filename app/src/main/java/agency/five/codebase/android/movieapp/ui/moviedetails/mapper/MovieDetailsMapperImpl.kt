@@ -16,10 +16,13 @@ class MovieDetailsMapperImpl : MovieDetailsMapper {
             crewmen.add(CrewmanViewState(CrewItemViewState(crewman.name, crewman.job)))
 
         for (actor in movieDetails.cast)
-            actors.add(ActorViewState(ActorCardViewState(name = actor.name,
-                imageUrl = actor.imageUrl,
-                character = actor.character,
-                id = actor.id)))
+            actors.add(ActorViewState(
+                id = actor.id,
+                ActorCardViewState(
+                    name = actor.name,
+                    imageUrl = actor.imageUrl,
+                    character = actor.character,
+                )))
 
         return MovieDetailsViewState(
             id = movieDetails.movie.id,

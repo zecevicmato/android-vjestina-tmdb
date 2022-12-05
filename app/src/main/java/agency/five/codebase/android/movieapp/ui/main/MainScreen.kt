@@ -26,8 +26,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 @Composable
@@ -35,16 +33,27 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-    var showBottomBar by remember { mutableStateOf(navController.currentDestination == null) }
+    val showBottomBar by remember {
+        derivedStateOf {
+            when (navBackStackEntry?.destination?.route) {
+                MovieDetailsDestination.route -> false
+                else -> true
+            }
+        }
+    }
 
-    val showBackIcon = !showBottomBar
+    val showBackIcon =
+        if (navBackStackEntry?.destination?.route == NavigationItem.FavoritesDestination.route) {
+            true
+        } else {
+            !showBottomBar
+        }
 
     Scaffold(
         topBar = {
             TopBar(
                 navigationIcon = {
                     if (showBackIcon) BackIcon(onBackClick = {
-                        showBottomBar = showBottomBar.not()
                         navController.popBackStack()
                     })
                 }
@@ -57,11 +66,10 @@ fun MainScreen() {
                         NavigationItem.HomeDestination,
                         NavigationItem.FavoritesDestination,
                     ),
-                    onNavigateToDestination = {
-                        navController.navigate(it.route) {
-                            popUpTo(HOME_ROUTE) {
-                                if (it.route == HOME_ROUTE)
-                                    inclusive = true
+                    onNavigateToDestination = { destination ->
+                        navController.navigate(destination.route) {
+                            this.popUpTo(destination.route) {
+                                inclusive = true
                             }
                         }
                     },
@@ -79,19 +87,19 @@ fun MainScreen() {
                 modifier = Modifier.padding(padding)
             ) {
                 composable(NavigationItem.HomeDestination.route) {
-                    HomeScreenRoute(
-                        onNavigateToMovieDetails = {
-                            showBottomBar = showBottomBar.not()
-                            navController.navigate(it)
-                        }
-                    )
+                    HomeScreenRoute(onNavigateToMovieDetails = { movieId ->
+                        navController.navigate(
+                            MovieDetailsDestination.createNavigationRoute(movieId)
+                        )
+                    })
                 }
 
                 composable(NavigationItem.FavoritesDestination.route) {
                     FavoritesRoute(
-                        onNavigateToMovieDetails = {
-                            showBottomBar = showBottomBar.not()
-                            navController.navigate(it)
+                        onNavigateToMovieDetails = { movieId ->
+                            navController.navigate(
+                                MovieDetailsDestination.createNavigationRoute(movieId)
+                            )
                         }
                     )
                 }
@@ -168,7 +176,9 @@ private fun BottomNavigationBar(
                 selected = currentDestination?.route == destination.route,
                 icon = {
                     Icon(
-                        painter = painterResource(id = if (currentDestination?.route == destination.route) destination.selectedIconId else destination.unselectedIconId),
+                        painter = painterResource(id = if (currentDestination?.route == destination.route)
+                            destination.selectedIconId
+                        else destination.unselectedIconId),
                         contentDescription = null)
                 },
                 label = {

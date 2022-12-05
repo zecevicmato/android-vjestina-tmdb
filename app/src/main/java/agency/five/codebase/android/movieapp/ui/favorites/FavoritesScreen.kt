@@ -26,23 +26,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-
 private val favoritesMapper: FavoritesMapper = FavoritesMapperImpl()
 
 val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMoviesList())
-
 
 @Composable
 fun FavoritesRoute(onNavigateToMovieDetails: (Int) -> Unit) {
     val favorites by remember {
         mutableStateOf(favoritesViewState)
     }
-    FavoritesScreen(favorites)
+    FavoritesScreen(favorites,onNavigateToMovieDetails)
 }
 
 @Composable
 fun FavoritesScreen(
     favoritesViewState: FavoritesViewState,
+    onNavigateToMovieDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -60,7 +59,7 @@ fun FavoritesScreen(
             items = favoritesViewState.favoriteMovies,
             key = { favoriteMovies -> favoriteMovies.id }) { favoriteMovies ->
             MovieCard(movieCardViewState = favoriteMovies.movieCardViewState,
-                onFavoriteClick = {},
+                onFavoriteClick = {onNavigateToMovieDetails(favoriteMovies.id)},
                 modifier = Modifier.shadow(elevation = 4.dp, shape = MaterialTheme.shapes.medium)
             )
         }
@@ -94,7 +93,8 @@ fun FavoritesScreenPreview() {
     MovieAppTheme {
         FavoritesScreen(
             favoritesViewState = favoritesViewState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            onNavigateToMovieDetails = {}
         )
     }
 }

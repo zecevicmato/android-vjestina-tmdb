@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 data class ActorCardViewState(
-    val id:Int,
     val imageUrl: String?,
     val name: String,
     val character: String,
@@ -71,7 +70,6 @@ private fun CardPreview() {
         imageUrl = recalledActor.imageUrl,
         name = recalledActor.name,
         character = recalledActor.character,
-        id = recalledActor.id
     )
     ActorCard(
         actorCardViewState = actorCardViewState,

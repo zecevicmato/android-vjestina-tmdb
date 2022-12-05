@@ -12,11 +12,12 @@ import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import agency.five.codebase.android.movieapp.ui.theme.spacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -50,21 +51,18 @@ fun MovieDetailsScreen(
     onFavoriteButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
-        modifier = modifier.background(MaterialTheme.colors.background),
+    Column(
+        modifier = modifier
+            .background(MaterialTheme.colors.background)
+            .verticalScroll(state = rememberScrollState()),
     ) {
-        item {
-            ImageSection(movieDetailsViewState, onFavoriteButtonClick)
-        }
-        item {
-            OverviewSection(movieDetailsViewState)
-        }
-        item {
-            CrewmanSection(movieDetailsViewState)
-        }
-        item {
-            CastSection(movieDetailsViewState)
-        }
+        ImageSection(movieDetailsViewState, onFavoriteButtonClick)
+
+        OverviewSection(movieDetailsViewState)
+
+        CrewmanSection(movieDetailsViewState)
+
+        CastSection(movieDetailsViewState)
     }
 }
 
@@ -73,7 +71,10 @@ fun CastSection(
     movieDetailsViewState: MovieDetailsViewState,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.background(MaterialTheme.colors.onPrimary)) {
+    Column(modifier = modifier
+        .background(MaterialTheme.colors.onPrimary)
+        .padding(horizontal = MaterialTheme.spacing.medium,
+            vertical = MaterialTheme.spacing.small)) {
         Text(
             text = stringResource(id = R.string.cast_title),
             style = MaterialTheme.typography.h5,
@@ -81,6 +82,8 @@ fun CastSection(
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
+            contentPadding = PaddingValues(start = MaterialTheme.spacing.medium,
+                end = MaterialTheme.spacing.medium)
         ) {
             items(movieDetailsViewState.cast.size) { actor ->
                 ActorCard(
@@ -96,9 +99,12 @@ fun CrewmanSection(
     movieDetailsViewState: MovieDetailsViewState,
     modifier: Modifier = Modifier,
 ) {
-    LazyVerticalGrid(columns = GridCells.Fixed(3),
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(6),
+        horizontalArrangement = Arrangement.SpaceBetween,
         contentPadding = PaddingValues(MaterialTheme.spacing.large),
-        modifier = modifier.padding(start = MaterialTheme.spacing.small)
+        modifier = modifier.padding(start = MaterialTheme.spacing.medium,
+            end = MaterialTheme.spacing.medium)
     ) {
         items(
             movieDetailsViewState.crew
