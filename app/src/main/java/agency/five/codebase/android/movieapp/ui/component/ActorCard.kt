@@ -69,7 +69,7 @@ private fun CardPreview() {
     val actorCardViewState = ActorCardViewState(
         imageUrl = recalledActor.imageUrl,
         name = recalledActor.name,
-        character = recalledActor.character
+        character = recalledActor.character,
     )
     ActorCard(
         actorCardViewState = actorCardViewState,
